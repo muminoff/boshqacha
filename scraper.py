@@ -34,7 +34,7 @@ def get_women_names(letter):
 
 
 def main():
-    for letter in ['A']:
+    for letter in uzb_alphabet:
         print get_men_names(letter), len(get_men_names(letter))
         print get_women_names(letter), len(get_women_names(letter))
 
