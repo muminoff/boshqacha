@@ -34,9 +34,12 @@ def get_men_names(url):
     names_array = []
     for names_ in names:
         for name in names_.text.strip().split():
+            if ',' in name:
+                name = name.replace(',', '')
             print name
-            _execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "male"))
+            #_execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "male"))
 
+    print "Done for %s" % url
     return
 
 
@@ -47,16 +50,19 @@ def get_women_names(url):
     names_array = []
     for names_ in names:
         for name in names_.text.strip().split():
+            if ',' in name:
+                name = name.replace(',', '')
             print name
-            _execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "female"))
+            #_execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "female"))
 
+    print "Done for %s" % url
     return
 
 def main():
 
     for url in urls:
+        get_men_names(url)
         get_women_names(url)
-        #print get_women_names(url)
 
 
 
