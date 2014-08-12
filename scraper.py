@@ -27,6 +27,42 @@ def _execute(query):
     return result
 
 
+def make_male_family_name(name):
+    if name[-1:] in 'aeiou':
+        return name + 'yev'
+    elif name[-1:] in 'y':
+        return name + 'ev'
+    else:
+        return name + 'ov'
+
+
+def make_female_family_name(name):
+    if name[-1:] in 'aeiou':
+        return name + 'yeva'
+    elif name[-1:] in 'y':
+        return name + 'eva'
+    else:
+        return name + 'ova'
+
+
+def make_male_fathers_name(name):
+    if name[-1:] in 'aeiou':
+        return name + 'yevich'
+    elif name[-1:] in 'y':
+        return name + 'evich'
+    else:
+        return name + 'ovich'
+
+
+def make_female_fathers_name(name):
+    if name[-1:] in 'aeiou':
+        return name + 'yevna'
+    elif name[-1:] in 'y':
+        return name + 'evna'
+    else:
+        return name + 'ovna'
+
+
 def get_men_names(url):
     page = urllib2.urlopen(url)
     soup = BeautifulSoup(page.read())
@@ -36,10 +72,13 @@ def get_men_names(url):
         for name in names_.text.strip().split():
             if ',' in name:
                 name = name.replace(',', '')
-            print name
-            #_execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "male"))
+            _execute("INSERT INTO `firstnames` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "male"))
+            _execute("INSERT INTO `lastnames` (`lastname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(make_male_family_name(name).encode('utf-8'), "male"))
+            _execute("INSERT INTO `lastnames` (`lastname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(make_female_family_name(name).encode('utf-8'), "female"))
+            _execute("INSERT INTO `fathersname` (`fathersname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(make_male_fathers_name(name).encode('utf-8'), "male"))
+            _execute("INSERT INTO `fathersname` (`fathersname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(make_female_fathers_name(name).encode('utf-8'), "female"))
 
-    print "Done for %s" % url
+    print "Done for %s (men)" % url
     return
 
 
@@ -52,11 +91,11 @@ def get_women_names(url):
         for name in names_.text.strip().split():
             if ',' in name:
                 name = name.replace(',', '')
-            print name
-            #_execute("INSERT INTO `ismlar` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "female"))
+            _execute("INSERT INTO `firstnames` (`firstname`,`sex`) VALUES (\"{0}\", \"{1}\");".format(name.encode('utf-8'), "female"))
 
-    print "Done for %s" % url
+    print "Done for %s (women)" % url
     return
+
 
 def main():
 
