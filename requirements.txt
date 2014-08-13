@@ -1,0 +1,9 @@
+wheel==0.23.0
+Jinja2==2.7.3
+MarkupSafe==0.23
+PyYAML==3.11
+binaryornot==0.3.0
+cookiecutter==0.7.2
+beautifulsoup4==4.3.2
+lxml==3.3.5
+wsgiref==0.1.2
